@@ -108,6 +108,22 @@ git checkout -- . 2>/dev/null; apm install --force   # restore
 Say: the lockfile is the supply-chain receipt. Edits under the install
 paths are detected; `apm install --frozen` is the CI gate.
 
+## Beat 3b: ship a fix, update the consumer (3 min)
+
+Story: `v1.0.0` has a real bug. Copilot rejects the agent because
+`tools: Read, Grep, Glob` is Claude's comma-string form and Copilot needs a
+YAML array. `v1.0.1` fixes it (`tools: [Read, Grep, Glob]`).
+
+```sh
+cd ~/Projects/bookstore-go
+head -6 .github/agents/security-auditor.agent.md      # broken: tools: Read, Grep, Glob
+apm install RB-Develop/bookstore-apm#v1.0.1 --target claude,copilot,codex
+head -6 .github/agents/security-auditor.agent.md      # fixed: tools: [Read, Grep, Glob]
+```
+
+Say: the lockfile pins the commit, so the upgrade is an explicit, reviewable
+diff, not a surprise.
+
 ## Beat 4 (optional): org policy blocks a foreign dependency (4 min)
 
 Constraint: at install time APM discovers policy only from the consumer's

@@ -1,5 +1,5 @@
 name: bookstore-apm
-version: 1.0.0
+version: 1.0.1
 description: >-
   Everything the room built in sessions 4 and 5, as one vendor-neutral APM
   package: the commit and changelog skills, the changelog hook, the
