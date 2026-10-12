@@ -1,0 +1,29 @@
+name: bookstore-apm
+version: 1.0.0
+description: >-
+  Everything the room built in sessions 4 and 5, as one vendor-neutral APM
+  package: the commit and changelog skills, the changelog hook, the
+  security-auditor agent, the bookstore conventions and the SQLite MCP server.
+author: Xebia Academy
+license: MIT
+
+# Which harnesses this package is meant for. A consumer's own apm.yml (or
+# `apm install --target ...`) decides where files actually land.
+targets: [claude, copilot, codex]
+
+dependencies:
+  apm: []
+  mcp:
+    # Self-defined stdio server shipped inside this package. APM writes it to
+    # .mcp.json (Claude), .github/mcp.json (Copilot) and .codex/config.toml
+    # (Codex). The path is where `apm install RB-Develop/bookstore-apm` puts
+    # the package in the consumer; run the harness from the project root.
+    - name: sqlite-bookstore
+      registry: false
+      transport: stdio
+      command: uv
+      args:
+        - run
+        - --script
+        - apm_modules/RB-Develop/bookstore-apm/mcp-sqlite/server.py
+        - store.db

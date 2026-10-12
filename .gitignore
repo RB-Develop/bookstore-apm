@@ -1,0 +1,9 @@
+# apm pack output and the manifest it drops into the source tree
+build/
+.github/plugin/
+
+# never a consumer, but just in case someone runs `apm install` in here
+apm_modules/
+apm.lock.yaml
+
+.DS_Store

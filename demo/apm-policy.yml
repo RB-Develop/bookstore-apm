@@ -1,0 +1,33 @@
+# Org policy for the governance beat of the demo.
+#
+# APM discovers this file at install time from the CONSUMER's git remote:
+# it fetches `apm-policy.yml` from `<owner>/.github-private`, `<owner>/.github`,
+# `<owner>/.apm` or `<owner>/_apm` on the same host (precedence in that order).
+# There is no local-file override during `apm install`, so to show it live:
+#
+#   1. Put this file at the root of a public repo `RB-Develop/.github`.
+#   2. Give bookstore-go a remote on that owner (the repo need not exist):
+#        git remote add origin git@github.com:RB-Develop/bookstore-go.git
+#   3. `apm policy status` in bookstore-go shows "found", enforcement block.
+#   4. `apm install github/awesome-copilot/agents/api-architect.agent.md`
+#      is refused before anything is written; `apm install RB-Develop/bookstore-apm`
+#      still passes.
+#
+# `apm policy status --policy-source demo/apm-policy.yml` and
+# `apm audit --policy demo/apm-policy.yml` read this file directly and are the
+# offline fallback for the same story.
+
+name: bookstore-org
+version: "1"
+enforcement: block      # warn | block | off
+fetch_failure: warn     # what happens when the policy itself cannot be fetched
+
+dependencies:
+  allow:
+    - "RB-Develop/**"   # only packages from our own org
+    - "./**"            # local-path packages stay allowed for development
+    - "../**"
+  require_pinned_constraint: true   # every dep must carry a tag, SHA or range
+
+mcp:
+  self_defined: warn    # packages that ship their own MCP server: warn, don't block
