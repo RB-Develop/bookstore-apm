@@ -1,7 +1,7 @@
 ---
 name: security-auditor
 description: Audits code for OWASP Top 10 vulnerabilities. Use this agent whenever the user asks for a security review, vulnerability check or audit, and use it proactively when new HTTP handlers or store functions are added or changed.
-tools: Read, Grep, Glob
+tools: [Read, Grep, Glob]
 model: haiku
 color: red
 ---
