@@ -117,11 +117,13 @@ YAML array. `v1.0.1` fixes it (`tools: [Read, Grep, Glob]`).
 ```sh
 cd ~/Projects/bookstore-go
 head -6 .github/agents/security-auditor.agent.md      # broken: tools: Read, Grep, Glob
+apm outdated                                           # read-only: v1.0.0 -> v1.0.1, status "outdated"
 apm install RB-Develop/bookstore-apm#v1.0.1 --target claude,copilot,codex
 head -6 .github/agents/security-auditor.agent.md      # fixed: tools: [Read, Grep, Glob]
 ```
 
-Say: the lockfile pins the commit, so the upgrade is an explicit, reviewable
+Say: `apm outdated` only compares the lockfile with the remote tags and
+installs nothing. The lockfile pins the commit, so the upgrade is an explicit, reviewable
 diff, not a surprise.
 
 ## Beat 4 (optional): org policy blocks a foreign dependency (4 min)
